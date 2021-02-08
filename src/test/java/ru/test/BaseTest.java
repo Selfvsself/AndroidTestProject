@@ -3,8 +3,8 @@ package ru.test;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.remote.MobileCapabilityType;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import org.junit.After;
+import org.junit.Before;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.net.MalformedURLException;
@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 
 public class BaseTest {
 
-    protected static AndroidDriver<AndroidElement> androidDriver;
+    protected AndroidDriver<AndroidElement> androidDriver;
     protected static Properties properties = TestProperties.getInstance().getProperties();
     private static final String DEVICE_NAME = properties.getProperty("deviceName");
     private static final String PLATFORM_NAME = properties.getProperty("platformName");
@@ -23,8 +23,8 @@ public class BaseTest {
     private static final String APPIUM_BASE_URL = properties.getProperty("appium.base.url");
     private static final String IMPLICITLY_TIMEOUT = properties.getProperty("timeout.global");
 
-    @BeforeClass
-    public static void setUp() throws MalformedURLException {
+    @Before
+    public void setUp() throws MalformedURLException {
         DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
 
         desiredCapabilities.setCapability(MobileCapabilityType.DEVICE_NAME, DEVICE_NAME);
@@ -39,8 +39,8 @@ public class BaseTest {
         androidDriver.manage().timeouts().implicitlyWait(Long.parseLong(IMPLICITLY_TIMEOUT), TimeUnit.SECONDS);
     }
 
-    @AfterClass
-    public static void close() {
+    @After
+    public void close() {
         androidDriver.quit();
     }
 }
